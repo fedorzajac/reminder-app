@@ -1,0 +1,31 @@
+# version: "3.8" # docker compose versioning
+
+services:
+  db:
+    image: postgres:17.2-alpine
+    # privileged: true
+    environment:
+      TZ: UTC
+      PGTZ: UTC
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+
+  app:
+    build:
+      context: ./app
+      args:
+        WORKDIR: $WORKDIR
+    command: sh -c "rm -f tmp/pids/server.pid && bundle exec rails server -b 0.0.0.0"
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - ./app:/$WORKDIR
+    depends_on:
+      - db
+    ports:
+      - "$API_PORT:$CONTAINER_PORT"
+
+volumes:
+  pg-data:
+
