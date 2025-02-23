@@ -3,7 +3,7 @@
 <% content_for :title, "Reminders" %>
 
 <h1>Reminders</h1>
-
+<%= turbo_stream_from "reminders" %>
 <div id="reminders">
   <% @reminders.each do |reminder| %>
     <%= render reminder %>
