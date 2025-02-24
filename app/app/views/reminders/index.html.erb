@@ -1,5 +1,20 @@
 <p style="color: green"><%= notice %></p>
 
+<%= link_to "New reminder", new_reminder_path %>
+
+<% content_for :title, "Reminders" %>
+
+<h1>Due Reminders</h1>
+<%= turbo_stream_from "due_reminders" %>
+<div id="due_reminders">
+  <% @due_reminders.each do |reminder| %>
+    <%= render reminder %>
+    <p>
+      <%= link_to "Show this reminder", reminder %>
+    </p>
+  <% end %>
+</div>
+
 <% content_for :title, "Reminders" %>
 
 <h1>Reminders</h1>
@@ -13,4 +28,3 @@
   <% end %>
 </div>
 
-<%= link_to "New reminder", new_reminder_path %>

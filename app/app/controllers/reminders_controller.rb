@@ -1,9 +1,18 @@
 class RemindersController < ApplicationController
-  before_action :set_reminder, only: %i[ show edit update destroy ]
+  before_action :set_reminder, only: %i[ show edit update destroy dismiss ]
+
+  def dismiss
+    @reminder.update(due: false)
+    respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.remove(@reminder) }
+      format.html { redirect_to posts_path, notice: "Post snoozed!" }
+    end
+  end
 
   # GET /reminders or /reminders.json
   def index
     @reminders = Reminder.all
+    @due_reminders = Reminder.where(due: true)
   end
 
   # GET /reminders/1 or /reminders/1.json
@@ -65,6 +74,6 @@ class RemindersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def reminder_params
-      params.require(:reminder).permit(:title, :description, :datetime, :price, :recurrence)
+      params.require(:reminder).permit(:title, :description, :datetime, :price, :recurrence, :due, :scheduler)
     end
 end

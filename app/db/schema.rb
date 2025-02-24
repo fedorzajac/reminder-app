@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_23_184009) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_24_144752) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -22,5 +22,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_23_184009) do
     t.integer "recurrence"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "due", default: false
+    t.string "scheduler"
   end
 end

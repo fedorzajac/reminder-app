@@ -23,5 +23,16 @@
     <strong>Recurrence:</strong>
     <%= reminder.recurrence %>
   </p>
+  <p>
+    <strong>Recurrence:</strong>
+    <%= reminder.due %>
+  </p>
 
+  <div>
+    <%= link_to "Edit this reminder", edit_reminder_path(reminder) %> |
+    <%= link_to "Back to reminders", reminders_path %>
+
+    <%= button_to "Destroy this reminder", reminder, method: :delete %>
+    <%= button_to "Dismiss", dismiss_reminder_path(reminder), method: :patch, remote: true, data: { turbo_method: :patch } %>
+  </div>
 </div>
