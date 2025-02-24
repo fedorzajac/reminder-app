@@ -7,11 +7,8 @@
 <h1>Due Reminders</h1>
 <%= turbo_stream_from "due_reminders" %>
 <div id="due_reminders">
-  <% @due_reminders.each do |reminder| %>
-    <%= render reminder %>
-    <p>
-      <%= link_to "Show this reminder", reminder %>
-    </p>
+  <% @due_reminders.each do |due_reminder| %>
+      <%= render partial: "reminders/due_reminder", locals: { reminder: due_reminder } %>
   <% end %>
 </div>
 
@@ -23,7 +20,7 @@
   <% @reminders.each do |reminder| %>
     <%= render reminder %>
     <p>
-      <%= link_to "Show this reminder", reminder %>
+      <%#= link_to "Show this reminder", reminder %>
     </p>
   <% end %>
 </div>

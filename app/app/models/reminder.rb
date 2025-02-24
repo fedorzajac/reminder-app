@@ -1,6 +1,10 @@
 class Reminder < ApplicationRecord
+
+  default_scope { order(datetime: :desc) }
+
   after_create_commit { broadcast_prepend_to "reminders" }
   after_update_commit { broadcast_replace_to "reminders" }
+  after_update_commit -> { broadcast_prepend_to "due_reminders", target: "due_reminders", partial: "reminders/due_reminder" }, if: -> { saved_change_to_due? }
   after_destroy_commit { broadcast_remove_to "reminders" }
 
   enum recurrence: RECURRENCE
