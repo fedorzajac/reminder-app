@@ -13,11 +13,11 @@ class Reminder < ApplicationRecord
   after_destroy :destroy_scheduler
   after_update :update_scheduler, if: :datetime_changed?
 
-  # validates :title, presence: true
-  # validates :description, presence: true
+  validates :title, presence: true
+  validates :description, presence: true
   validates :datetime, presence: true, unless: :time_in_past?, on: :create
   validates :price, presence: true, numericality: { greater_than_or_equal_to: 0 }
-  # validates :recurrence, presence: true
+  validates :recurrence, presence: true
   private
 
   def destroy_scheduler
